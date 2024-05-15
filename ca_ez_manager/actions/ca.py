@@ -3,12 +3,12 @@ import os
 from InquirerPy import prompt
 from prompt_toolkit.validation import ValidationError, Validator
 
-from ca_manager.crypto_utils import (
+from ca_ez_manager.crypto_utils import (
     generate_certificate,
     save_private_key,
     save_certificate,
 )
-from ca_manager.constants import ca_folder
+from ca_ez_manager.constants import ca_folder
 
 
 def create_ca(ca_list):

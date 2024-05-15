@@ -1,4 +1,4 @@
-from ca_manager import cli, __app_name__
+from ca_ez_manager import cli, __app_name__
 
 
 def main():

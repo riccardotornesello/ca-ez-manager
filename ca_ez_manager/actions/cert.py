@@ -2,7 +2,7 @@ import os
 
 from InquirerPy import prompt
 
-from ca_manager.crypto_utils import (
+from ca_ez_manager.crypto_utils import (
     sign_certificate,
     load_private_key,
     load_certificate,
@@ -10,7 +10,7 @@ from ca_manager.crypto_utils import (
     save_private_key,
     save_certificate,
 )
-from ca_manager.constants import ca_folder
+from ca_ez_manager.constants import ca_folder
 
 
 def generate_cert(ca_list):

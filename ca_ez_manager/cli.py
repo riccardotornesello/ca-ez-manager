@@ -6,11 +6,11 @@ from InquirerPy import prompt
 from InquirerPy.base.control import Choice
 import typer
 
-from ca_manager import __app_name__, __version__
-from ca_manager.constants import ActionType
-from ca_manager.actions.ca import create_ca
-from ca_manager.actions.cert import generate_cert
-from ca_manager.constants import ca_folder
+from ca_ez_manager import __app_name__, __version__
+from ca_ez_manager.constants import ActionType
+from ca_ez_manager.actions.ca import create_ca
+from ca_ez_manager.actions.cert import generate_cert
+from ca_ez_manager.constants import ca_folder
 
 app = typer.Typer(add_completion=False)
 

@@ -1,6 +1,6 @@
 from typer.testing import CliRunner
 
-from ca_manager import __app_name__, __version__, cli
+from ca_ez_manager import __app_name__, __version__, cli
 
 runner = CliRunner()
 

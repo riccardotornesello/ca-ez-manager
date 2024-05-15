@@ -1,4 +1,4 @@
-__app_name__ = "ca-manager"
+__app_name__ = "ca-ez-manager"
 __version__ = "0.0.0"
 
 (

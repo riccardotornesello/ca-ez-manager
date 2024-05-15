@@ -1,5 +1,5 @@
 [project]
-name = "ca-manager"
+name = "ca-ez-manager"
 dynamic = ["version"]
 authors = [{ name = "Riccardo Tornesello" }]
 description = "CLI tool to simply manage Certification Authorities using the shell"
@@ -14,18 +14,18 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/riccardotornesello/ca-manager"
-Issues = "https://github.com/riccardotornesello/ca-manager/issues"
+Homepage = "https://github.com/riccardotornesello/ca-ez-manager"
+Issues = "https://github.com/riccardotornesello/ca-ez-manager/issues"
 
 [project.scripts]
-ca-manager = "ca_manager.__main__:main"
+ca-ez-manager = "ca_ez_manager.__main__:main"
 
 [build-system]
 requires = ["setuptools >= 69.0"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.dynamic]
-version = { attr = "ca_manager.__version__" }
+version = { attr = "ca_ez_manager.__version__" }
 
 [tool.black]
 line-length = 120
@@ -39,7 +39,7 @@ logging_use_named_masks = false
 major_on_zero = true
 allow_zero_version = true
 tag_format = "v{version}"
-version_variables = ["ca_manager/__init__.py:__version__"]
+version_variables = ["ca_ez_manager/__init__.py:__version__"]
 
 [tool.semantic_release.branches.main]
 match = "(main|master)"
