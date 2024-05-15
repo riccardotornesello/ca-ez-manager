@@ -1,5 +1,5 @@
 [project]
-name = "ca_manager"
+name = "ca-manager"
 dynamic = ["version"]
 authors = [{ name = "Riccardo Tornesello" }]
 description = "CLI tool to simply manage Certification Authorities using the shell"
