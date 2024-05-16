@@ -24,6 +24,13 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: build
+        run: |
+          python -m pip install --upgrade pip
+          pip install build
+          python -m build
+        if: steps.release.outputs.released == 'true'
+
       - name: Publish package distributions to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         # NOTE: DO NOT wrap the conditional in ${{ }} as it will always evaluate to true.
