@@ -3,7 +3,7 @@ name = "ca-ez-manager"
 dynamic = ["version"]
 authors = [{ name = "Riccardo Tornesello" }]
 description = "CLI tool to simply manage Certification Authorities using the shell"
-readme = { file = "README.txt", content-type = "text/markdown" }
+readme = { file = "README.md", content-type = "text/markdown" }
 license = { file = "LICENSE" }
 requires-python = ">=3.8"
 dependencies = [
