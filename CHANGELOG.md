@@ -2,6 +2,13 @@
 
 
 
+## v0.0.3 (2024-05-16)
+
+### Fix
+
+* fix: readme in project description ([`4a4865b`](https://github.com/riccardotornesello/ca-ez-manager/commit/4a4865bd75eae35eb5395c100ade682556447f01))
+
+
 ## v0.0.2 (2024-05-16)
 
 ### Fix
