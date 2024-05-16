@@ -2,6 +2,13 @@
 
 
 
+## v0.0.2 (2024-05-16)
+
+### Fix
+
+* fix: build in pipeline ([`467d1ce`](https://github.com/riccardotornesello/ca-ez-manager/commit/467d1ce8c0a49ac97a861718c55c95b521317f4b))
+
+
 ## v0.0.1 (2024-05-15)
 
 ### Fix
