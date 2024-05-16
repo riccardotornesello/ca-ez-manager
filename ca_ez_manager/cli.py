@@ -32,7 +32,7 @@ def main(
         is_eager=True,
     ),
 ) -> None:
-    print("[bold green]Welcome to CA Manager![/bold green]")
+    print("[bold green]Welcome to CA Ez Manager![/bold green]")
 
     if not os.path.exists(ca_folder):
         os.makedirs(ca_folder)
