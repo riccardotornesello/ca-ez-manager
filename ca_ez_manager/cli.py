@@ -1,4 +1,3 @@
-import os
 from typing import Optional
 
 from rich import print
@@ -56,8 +55,8 @@ def callback(
             "choices": choices,
         }
     ]
-
     answers = prompt(questions)
+
     match answers[0]:
         case ActionType.CA_CREATE:
             ca.create()
