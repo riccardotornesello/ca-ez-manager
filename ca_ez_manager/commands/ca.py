@@ -1,9 +1,10 @@
 import typer
 from InquirerPy import prompt
+from InquirerPy.base.control import Choice
 from prompt_toolkit.validation import ValidationError, Validator
 
 from ca_ez_manager.utils.crypto import generate_certificate
-from ca_ez_manager.utils.storage import get_ca_list, store_ca
+from ca_ez_manager.utils.storage import get_ca_list, store_ca, delete_ca
 
 
 app = typer.Typer()
@@ -51,3 +52,31 @@ def create(name: str = None):
     store_ca(name, ca_private_key, ca_cert)
 
     print("CA created successfully")
+
+
+@app.command(name="delete")
+def delete(name: str = None):
+    ca_list = get_ca_list()
+
+    if name:
+        if name not in ca_list:
+            print("CA not found")
+            raise typer.Exit(code=1)
+
+    else:
+        choices = [Choice(value=ca, name=ca) for ca in ca_list]
+        questions = [
+            {
+                "name": "name",
+                "type": "list",
+                "message": "Select the CA to delete:",
+                "choices": choices,
+            }
+        ]
+        answers = prompt(questions)
+
+        name = answers["name"]
+
+    delete_ca(name)
+
+    print("CA deleted successfully")

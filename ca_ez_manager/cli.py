@@ -44,6 +44,7 @@ def callback(
 
     choices = [
         Choice(value=ActionType.CA_CREATE, name="Create a new CA"),
+        Choice(value=ActionType.CA_DELETE, name="Delete an existing CA", enabled=len(ca_list) > 0),
         Choice(value=ActionType.CERT_GENERATE, name="Generate a new certificate", enabled=len(ca_list) > 0),
         Choice(value=None, name="Exit"),
     ]
@@ -60,6 +61,8 @@ def callback(
     match answers[0]:
         case ActionType.CA_CREATE:
             ca.create()
+        case ActionType.CA_DELETE:
+            ca.delete()
         case ActionType.CERT_GENERATE:
             cert.generate()
         case None:

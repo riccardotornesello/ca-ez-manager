@@ -1,4 +1,5 @@
 import os
+import shutil
 from typing import List
 
 from ca_ez_manager.utils.crypto import (
@@ -89,3 +90,12 @@ def get_certs_list(ca_name: str):
 
     # Return only the directories that contain the necessary files
     return [d for d in subdirs if all(os.path.exists(f"{selected_ca_folder}/{d}/{fn}") for fn in NECESSARY_CERT_FILES)]
+
+
+def delete_ca(ca_name: str):
+    selected_ca_folder = f"{ca_root_folder}/{ca_name}"
+
+    if not os.path.exists(selected_ca_folder):
+        raise FileNotFoundError(f"CA {ca_name} not found")
+
+    shutil.rmtree(selected_ca_folder)
