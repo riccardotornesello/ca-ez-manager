@@ -36,6 +36,9 @@ def get_ca_list() -> List[str]:
 
 
 def store_ca(ca_name: str, private_key, cert):
+    if os.path.exists(f"{ca_folder}/{ca_name}"):
+        raise FileExistsError(f"CA {ca_name} already exists")
+
     os.makedirs(f"{ca_folder}/{ca_name}")
 
     save_private_key(private_key, f"{ca_folder}/{ca_name}/ca.key")
@@ -54,6 +57,9 @@ def get_ca(ca_name: str):
 
 
 def store_cert(ca_name: str, cert_name: str, private_key, cert, csr):
+    if os.path.exists(f"{ca_folder}/{ca_name}/{cert_name}"):
+        raise FileExistsError(f"Certificate {cert_name} already exists")
+
     os.makedirs(f"{ca_folder}/{ca_name}/{cert_name}")
 
     save_private_key(private_key, f"{ca_folder}/{ca_name}/{cert_name}/{cert_name}.key")
