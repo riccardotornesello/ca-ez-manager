@@ -11,9 +11,7 @@ from cryptography.x509.oid import NameOID
 def generate_certificate() -> Tuple[rsa.RSAPrivateKey, x509.Certificate]:
     # TODO: pass parameters
 
-    private_key = rsa.generate_private_key(
-        public_exponent=65537, key_size=2048, backend=default_backend()
-    )
+    private_key = rsa.generate_private_key(public_exponent=65537, key_size=2048, backend=default_backend())
     public_key = private_key.public_key()
 
     builder = x509.CertificateBuilder()
@@ -22,9 +20,7 @@ def generate_certificate() -> Tuple[rsa.RSAPrivateKey, x509.Certificate]:
             [
                 x509.NameAttribute(NameOID.COMMON_NAME, "openstack-ansible Test CA"),
                 x509.NameAttribute(NameOID.ORGANIZATION_NAME, "openstack-ansible"),
-                x509.NameAttribute(
-                    NameOID.ORGANIZATIONAL_UNIT_NAME, "Default CA Deployment"
-                ),
+                x509.NameAttribute(NameOID.ORGANIZATIONAL_UNIT_NAME, "Default CA Deployment"),
             ]
         )
     )
@@ -35,12 +31,8 @@ def generate_certificate() -> Tuple[rsa.RSAPrivateKey, x509.Certificate]:
             ]
         )
     )
-    builder = builder.not_valid_before(
-        datetime.datetime.today() - datetime.timedelta(days=1)
-    )
-    builder = builder.not_valid_after(
-        datetime.datetime.today() + datetime.timedelta(days=365)
-    )
+    builder = builder.not_valid_before(datetime.datetime.today() - datetime.timedelta(days=1))
+    builder = builder.not_valid_after(datetime.datetime.today() + datetime.timedelta(days=365))
     builder = builder.serial_number(x509.random_serial_number())
     builder = builder.public_key(public_key)
     builder = builder.add_extension(
@@ -48,9 +40,7 @@ def generate_certificate() -> Tuple[rsa.RSAPrivateKey, x509.Certificate]:
         critical=True,
     )
 
-    cert = builder.sign(
-        private_key=private_key, algorithm=hashes.SHA256(), backend=default_backend()
-    )
+    cert = builder.sign(private_key=private_key, algorithm=hashes.SHA256(), backend=default_backend())
 
     return private_key, cert
 
@@ -128,9 +118,7 @@ def save_certificate(cert, path):
 
 def load_private_key(path):
     with open(path, "rb") as f:
-        return serialization.load_pem_private_key(
-            f.read(), password=None, backend=default_backend()
-        )
+        return serialization.load_pem_private_key(f.read(), password=None, backend=default_backend())
 
 
 def load_certificate(path):

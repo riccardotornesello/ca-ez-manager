@@ -1,5 +1,6 @@
 import os
 
+import typer
 from InquirerPy import prompt
 from prompt_toolkit.validation import ValidationError, Validator
 
@@ -11,7 +12,16 @@ from ca_ez_manager.crypto_utils import (
 from ca_ez_manager.constants import ca_folder
 
 
-def create_ca(ca_list):
+app = typer.Typer()
+
+
+@app.command(name="create")
+def create():
+    ca_list = os.listdir(ca_folder)
+    if len(ca_list) == 0:
+        print("[red]No CAs found.[/red]")
+        return
+
     class CANameValidator(Validator):
         def validate(self, document):
             if document.text in ca_list:

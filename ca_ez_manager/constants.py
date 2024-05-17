@@ -7,5 +7,5 @@ ca_folder = os.path.join(home, ".ca")
 
 
 class ActionType(str, Enum):
-    CREATE_CA = "CREATE_CA"
-    GENERATE_CERTIFICATE = "GENERATE_CERTIFICATE"
+    CA_CREATE = "CA_CREATE"
+    CERT_GENERATE = "CERT_GENERATE"

@@ -8,11 +8,11 @@ import typer
 
 from ca_ez_manager import __app_name__, __version__
 from ca_ez_manager.constants import ActionType
-from ca_ez_manager.actions.ca import create_ca
-from ca_ez_manager.actions.cert import generate_cert
+from ca_ez_manager.commands import ca, cert
 from ca_ez_manager.constants import ca_folder
 
-app = typer.Typer(add_completion=False)
+
+app = typer.Typer()
 
 
 def _version_callback(value: bool) -> None:
@@ -22,7 +22,8 @@ def _version_callback(value: bool) -> None:
 
 
 @app.callback(invoke_without_command=True)
-def main(
+def callback(
+    ctx: typer.Context,
     version: Optional[bool] = typer.Option(
         None,
         "--version",
@@ -32,13 +33,19 @@ def main(
         is_eager=True,
     ),
 ) -> None:
+    # This is the main entry point of the application.
+
+    # Just run the subcommand if it has been provided.
+    if ctx.invoked_subcommand is not None:
+        return
+
     print("[bold green]Welcome to CA Ez Manager![/bold green]")
 
     if not os.path.exists(ca_folder):
         os.makedirs(ca_folder)
 
     choices = [
-        Choice(value=ActionType.CREATE_CA, name="Create a new CA"),
+        Choice(value=ActionType.CA_CREATE, name="Create a new CA"),
         Choice(value=None, name="Exit"),
     ]
 
@@ -48,9 +55,7 @@ def main(
     else:
         choices.insert(
             1,
-            Choice(
-                value=ActionType.GENERATE_CERTIFICATE, name="Generate a new certificate"
-            ),
+            Choice(value=ActionType.CERT_GENERATE, name="Generate a new certificate"),
         )
 
     questions = [
@@ -63,13 +68,17 @@ def main(
 
     answers = prompt(questions)
     match answers[0]:
-        case ActionType.CREATE_CA:
-            create_ca(ca_list)
-        case ActionType.GENERATE_CERTIFICATE:
-            generate_cert(ca_list)
+        case ActionType.CA_CREATE:
+            ca.create()
+        case ActionType.CERT_GENERATE:
+            cert.generate()
         case None:
             print("[bold green]Goodbye![/bold green]")
             raise typer.Exit()
         case _:
             print("[red]Invalid selection.[/red]")
             raise typer.Exit()
+
+
+app.add_typer(ca.app, name="ca")
+app.add_typer(cert.app, name="cert")

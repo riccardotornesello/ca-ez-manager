@@ -1,5 +1,6 @@
 import os
 
+import typer
 from InquirerPy import prompt
 
 from ca_ez_manager.crypto_utils import (
@@ -13,7 +14,16 @@ from ca_ez_manager.crypto_utils import (
 from ca_ez_manager.constants import ca_folder
 
 
-def generate_cert(ca_list):
+app = typer.Typer()
+
+
+@app.command(name="generate")
+def generate():
+    ca_list = os.listdir(ca_folder)
+    if len(ca_list) == 0:
+        print("[red]No CAs found.[/red]")
+        return
+
     answers = prompt(
         [
             {
@@ -37,9 +47,7 @@ def generate_cert(ca_list):
 
     private_key, csr, cert = sign_certificate(ca_private_key, ca_cert)
 
-    os.makedirs(
-        f"{ca_folder}/{answers['ca_name']}/{answers['common_name']}", exist_ok=True
-    )
+    os.makedirs(f"{ca_folder}/{answers['ca_name']}/{answers['common_name']}", exist_ok=True)
 
     save_private_key(
         private_key,
