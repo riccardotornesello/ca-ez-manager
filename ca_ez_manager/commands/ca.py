@@ -12,9 +12,6 @@ app = typer.Typer()
 @app.command(name="create")
 def create():
     ca_list = get_ca_list()
-    if len(ca_list) == 0:
-        print("[red]No CAs found.[/red]")
-        return
 
     class CANameValidator(Validator):
         def validate(self, document):

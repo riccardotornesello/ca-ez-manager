@@ -15,7 +15,7 @@ def generate():
     ca_list = get_ca_list()
     if len(ca_list) == 0:
         print("[red]No CAs found.[/red]")
-        return
+        raise typer.Exit(code=1)
 
     answers = prompt(
         [
