@@ -9,7 +9,7 @@ import typer
 from ca_ez_manager import __app_name__, __version__
 from ca_ez_manager.constants import ActionType
 from ca_ez_manager.commands import ca, cert
-from ca_ez_manager.constants import ca_folder
+from ca_ez_manager.utils.storage import get_ca_list
 
 
 app = typer.Typer()
@@ -41,22 +41,13 @@ def callback(
 
     print("[bold green]Welcome to CA Ez Manager![/bold green]")
 
-    if not os.path.exists(ca_folder):
-        os.makedirs(ca_folder)
+    ca_list = get_ca_list()
 
     choices = [
         Choice(value=ActionType.CA_CREATE, name="Create a new CA"),
+        Choice(value=ActionType.CERT_GENERATE, name="Generate a new certificate", enabled=len(ca_list) > 0),
         Choice(value=None, name="Exit"),
     ]
-
-    ca_list = os.listdir(ca_folder)
-    if len(ca_list) == 0:
-        print("[red]No CAs found.[/red]")
-    else:
-        choices.insert(
-            1,
-            Choice(value=ActionType.CERT_GENERATE, name="Generate a new certificate"),
-        )
 
     questions = [
         {

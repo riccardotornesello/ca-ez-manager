@@ -1,15 +1,9 @@
-import os
-
 import typer
 from InquirerPy import prompt
 from prompt_toolkit.validation import ValidationError, Validator
 
-from ca_ez_manager.crypto_utils import (
-    generate_certificate,
-    save_private_key,
-    save_certificate,
-)
-from ca_ez_manager.constants import ca_folder
+from ca_ez_manager.utils.crypto import generate_certificate
+from ca_ez_manager.utils.storage import get_ca_list, store_ca
 
 
 app = typer.Typer()
@@ -17,7 +11,7 @@ app = typer.Typer()
 
 @app.command(name="create")
 def create():
-    ca_list = os.listdir(ca_folder)
+    ca_list = get_ca_list()
     if len(ca_list) == 0:
         print("[red]No CAs found.[/red]")
         return
@@ -48,7 +42,4 @@ def create():
 
     ca_private_key, ca_cert = generate_certificate()
 
-    os.makedirs(f"{ca_folder}/{answers['ca_name']}")
-
-    save_private_key(ca_private_key, f"{ca_folder}/{answers['ca_name']}/ca.key")
-    save_certificate(ca_cert, f"{ca_folder}/{answers['ca_name']}/ca.pem")
+    store_ca(answers["ca_name"], ca_private_key, ca_cert)
