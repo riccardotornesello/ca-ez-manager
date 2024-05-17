@@ -10,33 +10,44 @@ app = typer.Typer()
 
 
 @app.command(name="create")
-def create():
+def create(name: str = None):
     ca_list = get_ca_list()
 
-    class CANameValidator(Validator):
-        def validate(self, document):
-            if document.text in ca_list:
-                raise ValidationError(
-                    message="CA already exists.",
-                    cursor_position=document.cursor_position,
-                )
-            if not document.text.isalnum():
-                raise ValidationError(
-                    message="The name must contain only lowercase letters and numbers.",
-                    cursor_position=document.cursor_position,
-                )
+    if name:
+        if name in ca_list:
+            print("CA already exists")
+            raise typer.Exit(code=1)
 
-    answers = prompt(
-        [
-            {
-                "type": "input",
-                "message": "Enter the name of the CA:",
-                "name": "ca_name",
-                "validate": CANameValidator(),
-            }
-        ]
-    )
+    else:
+
+        class CANameValidator(Validator):
+            def validate(self, document):
+                if document.text in ca_list:
+                    raise ValidationError(
+                        message="CA already exists.",
+                        cursor_position=document.cursor_position,
+                    )
+                if not document.text.isalnum():
+                    raise ValidationError(
+                        message="The name must contain only lowercase letters and numbers.",
+                        cursor_position=document.cursor_position,
+                    )
+
+        answers = prompt(
+            [
+                {
+                    "name": "name",
+                    "type": "input",
+                    "message": "Enter the name of the CA:",
+                    "validate": CANameValidator(),
+                }
+            ]
+        )
+
+        name = answers["name"]
 
     ca_private_key, ca_cert = generate_certificate()
 
-    store_ca(answers["ca_name"], ca_private_key, ca_cert)
+    store_ca(name, ca_private_key, ca_cert)
+
+    print("CA created successfully")
